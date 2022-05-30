@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://127.0.0.1:3000/bootcam-Javascript1/DesarrolloStackJavascript-/modulo4/clase1/m04c01.html",
+            "request": "launch",
+            "url": "http://127.0.0.1:3000/bootcam-Javascript1/DesarrolloStackJavascript-/modulo4/clase1/m04c01.html"
+        }
+    ]
+}
