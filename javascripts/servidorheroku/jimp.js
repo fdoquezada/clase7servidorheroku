@@ -1,0 +1,1 @@
+var jimp=require("jimp");

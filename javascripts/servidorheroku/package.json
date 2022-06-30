@@ -2,15 +2,15 @@
   "dependencies": {
     "axios": "^0.27.2",
     "express": "^4.18.1",
+    "jimp": "^0.16.1",
     "yard": "^1.0.3",
     "yargs": "^17.5.1"
   },
   "name": "servidorheroku",
   "version": "1.0.0",
   "main": "axiosGEt.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node benchmark"
   },
   "keywords": [],
   "author": "",
