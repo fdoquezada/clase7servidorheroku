@@ -13,7 +13,7 @@ async function obtenerPokemon(numero){
 
 //--------------------------------------------------------------------------
 //version genérica alternativa que hace lo mismo que lo anterior.
-let numero=100
+let numero=101
 axios({
     method:'get',
     url:'https://pokeapi.co/api/v2/pokemon/'+numero,
