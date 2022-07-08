@@ -83,4 +83,15 @@ pool.query(query_ej2,function(err,res){
         console.table(res.rows);
     }
 })
+//ejercicio1 
+//agregar un nuevo autor y 2 libros de sua autoria
+//solucuion alexis
+
+async function agregarAutor(id,Nombre,FechaNacimento,Nacionalidad){
+    const query='INSERT INTO "AUTORES" VALUES (1,$2,$3,$4)';
+    const parametros=[id,Nombre,FechaNacimiento,Nacionalidad];
+    let respuesta=await pool.query(query,parametros);
+    console.log("respuesta insert autor:" + respuesta);
+    console.log ("****************")
+}
 
