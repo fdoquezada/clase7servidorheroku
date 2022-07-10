@@ -1,12 +1,10 @@
-//imprtar librerias o módulos
+//importar librerias o módulos---------------------------------------------
 const {Client,Pool}=require('pg');
-const express = require('express')
-require('dotenv').config()
+const express = require('express');
+require('dotenv').config();
 
-
-//crear configuracion
-const port = 8081
-
+//crear configuracion------------------------------------------------------
+const port =4000
 
 const configuracion={
     host:process.env.PGHOST,
@@ -18,33 +16,33 @@ const configuracion={
     idleTimeoutMillis: 3000, //tiempo de espera
     connectionTimeoutMillis: 2000, //tiempo de desconexion
 }
-//inicializacion
+
+//inicializacion-----------------------------------------------------------
 const pool=new Pool(configuracion);
 const app = express()
 
-
-
+//rutas--------------------------------------------------------------------
+//obtener la lista de libros desde la bd
 
 
  //generar codigo para buscar libros en la bd
-app.get('/libros', (req, res) => {
-    const consulta='SELECT 1."Nombre" AS "libros",a."Nombre" AS "Autor", 1."Edicion" FROM "libros" 1 JOIN "Autores a ON 1."IdAutor"=a."Id"'
+app.get('/libros', async (req, res) => {
+    const consulta='SELECT l."Nombre" AS "Libro",a."Nombre" AS "Autor", l."Edicion" FROM "Libros" l JOIN "Autores" a ON l."IdAutor"=a."Id" '
     let resultado;
     try{
-        resultado=await pool.query(consulta);
-        let response={respuesta:resultado.row};
+        resultado= await pool.query(consulta);
+        let response={respuesta:resultado.rows};
         res.send(JSON.stringify(response));
     }catch(err){
-        console.log(`Error al ejecutar consulta : ${err.message}`);
+        console.log(`Error al ejecutar consulta: ${err.message}`);//"Error al ejecutar consulta:" +err.message
         res.status(500);
         res.end('error al buscar datos');
     }
- 
 });
 
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('pagina de inicio'))
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
