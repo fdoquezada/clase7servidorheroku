@@ -2,6 +2,7 @@
 const {Client,Pool}=require('pg');
 const express = require('express');
 const url=require('url');
+const morgan = require('morgan');
 require('dotenv').config();
 
 //crear configuracion------------------------------------------------------
@@ -21,6 +22,7 @@ const configuracion={
 //inicializacion-----------------------------------------------------------
 const pool=new Pool(configuracion);
 const app = express()
+app.use(morgan('dev'));
 
 //rutas--------------------------------------------------------------------
 //obtener la lista de libros desde la bd
@@ -37,10 +39,6 @@ app.get('/libros', async (req, res) => {
         res.end('error al buscar datos');
     }
 });
-//ejecucion del server----------------------------------------------------
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}!`)    
-})
 
 //ejercicios:
 //1.- crear rutas para devolver: autores
@@ -125,23 +123,23 @@ app.get('/copias_libro', async (req, res) => {
 
 //ejemplo con editoriales de generacin html
 app.get("/editorial",async function(req,res){
-let consulta ='SELECT "Nombre","Pais" FROM "Editorial"';
-try{
-    //1.- leer desde la bd
-    let resultado=await pool.query(consulta);
-    //2.- con los datos, generar el html
-    let html="<ul>";
-    for(i=0;i<resultado.rows.length;i++){
-        html+="<li>" + resultado.rows[i].Nombre + " - "+  resultado.rows[i].Pais + "</li>"
+    let consulta ='SELECT "Nombre","Pais" FROM "Editorial"';
+    try{
+        //1.- leer desde la bd
+        let resultado=await pool.query(consulta);
+        //2.- con los datos, generar el html
+        let html="<ul>";
+        for(i=0;i<resultado.rows.length;i++){
+            html+="<li>" + resultado.rows[i].Nombre + " - "+  resultado.rows[i].Pais + "</li>"
+        }
+        html+="</ul>"
+        res.send(html);
+        
+    }catch(err){
+        console.log(`Error al ejecutar consulta: ${err.message}`);//"Error al ejecutar consulta:" +err.message
+        res.status(500);
+        res.end('error al buscar datos');
     }
-    html+="</ul>"
-    res.send(html);
-
-}catch(err){
-    console.log(`Error al ejecutar consulta: ${err.message}`);//"Error al ejecutar consulta:" +err.message
-    res.status(500);
-    res.end('error al buscar datos');
-}
 })
 
 //ejercicio 7
@@ -172,4 +170,12 @@ app.get('/bootstrap/libros',async function(req,res){
         res.status(500);
         res.end('error al buscar datos');
     }
+})
+
+
+app.get('/', (req, res) => res.send('Hello World!'));
+
+//ejecucion del server----------------------------------------------------
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}!`)    
 })
