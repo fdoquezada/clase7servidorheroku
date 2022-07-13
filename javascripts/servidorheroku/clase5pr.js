@@ -245,7 +245,7 @@ async function buscarOrdenado(){
         console.log(chalk.red.inverse("Error al buscarOrdenado: "  + error.message));
     }
 }
-//buscarOrdenado();
+buscarOrdenado();
 
 //12.- agrupar
 async function buscarAgrupado(){
